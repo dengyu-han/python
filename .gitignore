@@ -1,0 +1,31 @@
+# ===== 密钥与凭据（严禁上传）=====
+.env
+*.env
+.env.*
+!.env.example
+
+# ===== Python 缓存 =====
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# ===== 向量数据库（体积大，无需提交）=====
+chroma_db/
+langchain_chroma_db/
+*.chroma
+
+# ===== 日志 =====
+*.log
+logs/
+
+# ===== 编辑器/系统文件 =====
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ===== 运行生成物 =====
+*.db
