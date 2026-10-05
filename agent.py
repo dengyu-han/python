@@ -66,13 +66,13 @@ MAX_MESSAGE = 7
 def build_short_memory(history):
     """超窗时把最旧的簇原地替换成一条摘要,不返回新列表,外部chat_history同步生效"""
     if len(history) <= MAX_MESSAGE:
-        return
+        return history
 
     keep = MAX_MESSAGE - 1   #保留一位存摘要,其余为最新历史记录
     latest_msg = history[-keep:]
     old = history[:len(history) - keep]
     if old:
-        latest_msg.insert(0, _summarize(old))
+        latest_msg.insert(0, _summarize(old,client))
     history[:] = latest_msg
     
 
@@ -255,7 +255,7 @@ tools = [
         "type": "function",
         "function": {
             "name": "rag",
-            "description": "检索本地文档知识库。**只有你判断答案存在于本地文档内才调用**；本地文档没有的信息不要调用rag。用户询问时间、加法计算，禁止调用rag。检索不到信息直接使用你的知识回答，禁止重复调用rag。",
+            "description": "检索本地文档知识库。**优先调用 rag 检索本地文档知识库。无论你主观猜测本地是否存在相关内容，都先调用 rag。拿到 rag 返回结果后，再评估是否需要调用 web_search。**。用户询问时间、加法计算，禁止调用rag。检索不到信息直接使用你的知识回答，禁止重复调用rag。",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -334,7 +334,7 @@ chat_history = []
 # ========== Agent核心逻辑==========
 def get_reply(user_msg, history):
     logger.info(f"初始化完成，用户问题:{user_msg}")
-    max_count = 10
+    max_count = 5
     Loop_count = 0
     history.append({"role": "user", "content": user_msg})
 
