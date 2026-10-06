@@ -151,7 +151,8 @@ def get_current_time():
 def calculate_add(a, b):
     logger.info(f"调用工具 calculate_add a={a}, b={b}")
     return a + b
-# RAG函数：移除return_distances，兼容旧版chromadb
+
+DISTANCE_THRESHOLD = 0.8
 def rag(query: str):
     logger.info(f"进入检索功能，查询：{query}")
     result = collection.query(
@@ -159,8 +160,16 @@ def rag(query: str):
         n_results=2
     )
     docs = result["documents"][0]
-    logger.info(f"检索得到片段: {docs}")
-    content = "\n".join(docs)
+    distance = result["distances"][0]
+
+    hit = [d  for d, dist in zip(docs, distance) if dist < DISTANCE_THRESHOLD]
+
+    if not hit:
+        logger.info("检索不到相关内容，返回空, 转用互联网搜索")
+        return ""
+    
+    content = "\n".join(hit)
+    logger.info(f"检索到相关内容，返回给大模型,内容长度:{len(content)}")
     return content
 
 def image_generate(prompt:str,  save_path:str,image_path:str =None):
