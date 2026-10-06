@@ -168,8 +168,11 @@ def rag(query: str):
         logger.info("检索不到相关内容，返回空, 转用互联网搜索")
         return ""
     
-    content = "\n".join(hit)
-    logger.info(f"检索到相关内容，返回给大模型,内容长度:{len(content)}")
+    content = f"""增强检索到的相关内容如下
+    整合好的片段:{"\n".join(hit)}
+    用户相关的问题：{query}
+    """
+    logger.info(f"检索并且增强相关内容，返回给大模型,内容长度:{len(content)}")
     return content
 
 def image_generate(prompt:str,  save_path:str,image_path:str =None):
