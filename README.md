@@ -12,6 +12,8 @@ Python · FastAPI · ChromaDB · Function-Calling · httpx / BeautifulSoup
 ├── agent.py            主程序（ReAct 决策循环 + Function-Calling 工具调度）
 ├── tool_server.py      FastAPI 工具服务（联网搜索 / 网页抓取，含 SSRF 防护）
 ├── chroma.py           向量库增量入库与脏分片管理
+├── examples/           LangChain 封装对照版（学习用，非主程序，运行需自配 .env）
+└── legacy/             早期独立脚本（项目无关，仅存档）
 ```
 
 ## 核心特性
