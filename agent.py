@@ -157,7 +157,7 @@ def rag(query: str):
     logger.info(f"进入检索功能，查询：{query}")
     result = collection.query(
         query_texts=[query],
-        n_results=2
+        n_results=3
     )
     docs = result["documents"][0]
     distance = result["distances"][0]
