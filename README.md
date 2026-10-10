@@ -58,6 +58,8 @@ Python · FastAPI · ChromaDB · OpenAI Function-Calling · httpx / BeautifulSou
 
 ## 运行方式
 
+> 完整的分步部署说明（虚拟环境、依赖安装、环境变量、知识库入库、验证与排错）见 **[DEPLOY.md](./DEPLOY.md)**。
+
 1. 配置 `.env`：
 
    ```
